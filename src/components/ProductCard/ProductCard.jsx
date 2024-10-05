@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import CardContext from "../../contexts/CardContext";
 
 const ProductCard = ({
   onProduct,
@@ -8,9 +9,9 @@ const ProductCard = ({
   onCountLike,
   likes,
   onLikes,
-  card,
-  onCard,
 }) => {
+  const { card,setCard } = useContext(CardContext);
+
   useEffect(() => {
     let flag = true;
     getProducts(flag);
@@ -46,9 +47,9 @@ const ProductCard = ({
     if (oldItem) {
       let arr = card.filter((i) => i.id != item.id);
       oldItem.quantity++;
-      onCard([...arr,oldItem])
+      setCard([...arr, oldItem]);
     } else
-      onCard([
+      setCard([
         ...card,
         { title: item.title, image: item.image, id: item.id, quantity: 1 },
       ]);

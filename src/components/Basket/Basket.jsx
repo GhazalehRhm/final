@@ -1,12 +1,16 @@
+import { useContext } from "react";
+import CardContext from "../../contexts/CardContext";
+
 // eslint-disable-next-line react/prop-types
-const Basket = ({ card, onCard }) => {
+const Basket = () => {
+  const { card, setCard } = useContext(CardContext);
   function handleRemove(item) {
     let oldItem = card.filter((i) => i.id === item.id)[0];
     let arr = card.filter((i) => i.id != item.id);
     oldItem.quantity--;
-    if( oldItem.quantity === 0){
-      onCard([...arr])
-    }else  onCard([...arr, oldItem])
+    if (oldItem.quantity === 0) {
+      setCard([...arr]);
+    } else setCard([...arr, oldItem]);
   }
 
   return (

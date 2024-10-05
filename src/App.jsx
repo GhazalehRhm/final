@@ -5,6 +5,7 @@ import Category from "./components/Category/Category";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import ProductCard from "./components/ProductCard/ProductCard";
+import CardContext from "./contexts/CardContext";
 
 function App() {
   const [product, setProduct] = useState([]);
@@ -17,39 +18,36 @@ function App() {
 
   return (
     <StrictMode>
-      <div className="flex flex-col h-screen justify-between">
-        <Header
-          onFilter={setFilter}
-          onClicked={setClicked}
-          countItem={countItem}
-          countLike={countLike}
-          onProduct={setProduct}
-          likes={likes}
-          product={product}
-          card={card}
-          onCard={setCard}
-        />
-        {!clicked ? (
-          <>
-            <Category onProduct={setProduct} />
-            <ProductCard
-              product={product}
-              onProduct={setProduct}
-              filter={filter}
-              onCountItem={setCountItem}
-              onCountLike={setCountLike}
-              likes={likes}
-              onLikes={setLikes}
-              card={card}
-              onCard={setCard}
-            />
-          </>
-        ) : (
-          <Basket card={card} onCard={setCard} />
-        )}
-
-        <Footer />
-      </div>
+      <CardContext.Provider value={{ card, setCard }}>
+        <div className="max-w-fit flex flex-col h-screen justify-between">
+          <Header
+            onFilter={setFilter}
+            onClicked={setClicked}
+            countItem={countItem}
+            countLike={countLike}
+            onProduct={setProduct}
+            likes={likes}
+            product={product}
+          />
+          {!clicked ? (
+            <>
+              <Category onProduct={setProduct} />
+              <ProductCard
+                product={product}
+                onProduct={setProduct}
+                filter={filter}
+                onCountItem={setCountItem}
+                onCountLike={setCountLike}
+                likes={likes}
+                onLikes={setLikes}
+              />
+            </>
+          ) : (
+            <Basket />
+          )}
+          <Footer />
+        </div>
+      </CardContext.Provider>
     </StrictMode>
   );
 }

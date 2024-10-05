@@ -1,15 +1,16 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useContext, useState } from "react";
+import CardContext from "../../contexts/CardContext";
 const Header = ({
   onFilter,
   onClicked,
-  card,
   countLike,
   onProduct,
   likes,
   product,
 }) => {
   const [search, setSearch] = useState("");
+  const { card } = useContext(CardContext);
 
   const handleChange = (e) => {
     setSearch(e.target.value);
@@ -19,13 +20,12 @@ const Header = ({
     onClicked(true);
   };
   const handleHome = () => {
-    
     onClicked(false);
+    
   };
   const handleLike = () => {
     onProduct(product.filter((item) => likes.includes(item.id)));
   };
-
 
   return (
     <>
@@ -44,7 +44,7 @@ const Header = ({
                   <a
                     href="javascript:void(0)"
                     className="hover:text-blue-600 text-blue-600 font-bold block text-base"
-                   onClick={handleHome}
+                    onClick={handleHome}
                   >
                     Home
                   </a>
