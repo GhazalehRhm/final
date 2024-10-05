@@ -15,7 +15,7 @@ const Header = ({
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
-
+ 
   const handleClick = () => {
     onClicked(true);
   };
